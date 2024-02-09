@@ -90,15 +90,22 @@ exports.getReport = async (req, res) => {
     }, {});
 
     // Send a success response with the report cost item
-    res.status(201).send({
-      message: "Report successfully fetched",
-      data: reports,
-    });
+    res.status(201).send(reports);
   } catch (error) {
-    res.status(400).send({
-      message: "Report failed",
-      error: error.message,
-    });
+    // Distinguish between validation errors (400) and other unexpected errors (500)
+    if (error.name === 'ValidationError') {
+      // This assumes the error is a Mongoose validation error
+      return res.status(400).send({
+        message: "Validation error",
+        error: error.message,
+      });
+    } else {
+      // For other kinds of errors, send a 500 Internal Server Error response
+      return res.status(500).send({
+        message: "Internal server error",
+        error: "An unexpected error occurred",
+      });
+    }
   }
 };
 
