@@ -42,10 +42,7 @@ exports.getAllDevelopers = async (req, res) => {
     else message = "Developers fetched successfully";
 
     // Send a success response with fetching all developers
-    res.status(200).send({
-      message,
-      data: AllDevelopers,
-    });
+    res.status(200).send(AllDevelopers);
     // Send an error response if the fetching developers fails
   } catch (error) {
     res.status(500).send({
