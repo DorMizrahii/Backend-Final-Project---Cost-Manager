@@ -27,7 +27,7 @@ mongoose
   .catch((err) => console.error("MongoDB connection error:", err));
 
 //every path stat with /api
-app.use("/api", costsRoutes);
+app.use("/", costsRoutes);
 
 //which port it would run on localhost
 const PORT = process.env.PORT || 3000;
