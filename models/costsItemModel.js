@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 const { Categories, Months } = require("../const");
-const { isValidDay } = require("../helper");
+const { isValidDay} = require("../helper");
 
 //Creating a new Schema(collection) of costs
 const costItemSchema = new mongoose.Schema({
@@ -45,8 +45,8 @@ const costItemSchema = new mongoose.Schema({
   },
 
   id: {
+    default: new Date().getTime(),
     type: Number,
-    min: 1,
   },
 
   description: {

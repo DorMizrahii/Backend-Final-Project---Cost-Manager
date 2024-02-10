@@ -3,12 +3,7 @@ const { isValidEnglishName } = require("../helper");
 
 //Creating a new Schema(collection) of developers
 const developerSchema = new mongoose.Schema({
-  id: {
-    type: Number,
-    required: [true, "Developer property must include ID!"],
-  },
-
-  firstName: {
+  firstname: {
     type: String,
     required: [true, "Developer property must include first name!"],
     validate: {
@@ -16,13 +11,18 @@ const developerSchema = new mongoose.Schema({
       message: (props) => `${props.value} is not a valid first name!`,
     },
   },
-  lastName: {
+  lastname: {
     type: String,
     required: [true, "Developer property must include last name!"],
     validate: {
       validator: isValidEnglishName,
       message: (props) => `${props.value} is not a valid first name!`,
     },
+  },
+
+  id: {
+    type: Number,
+    required: [true, "Developer property must include ID!"],
   },
 
   email: {
