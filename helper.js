@@ -1,16 +1,16 @@
-exports.isValidDay = (i_Year, i_Month, i_Day) => {
+exports.isValidDay = (inputYear, inputMonth, inputDay) => {
   // Adjust month value since JavaScript months are zero-based (0 for January, 11 for December)
-  i_Month--;
+  inputMonth--;
 
   // Create a Date object with the provided year, month, and day
-  const date = new Date(i_Year, i_Month, i_Day);
+  const date = new Date(inputYear, inputMonth, inputDay);
 
   // Check if the year, month, and day match the provided values
   // (JavaScript will automatically adjust the day if it's out of range for the given month)
   return (
-    date.getFullYear() === i_Year &&
-    date.getMonth() === i_Month &&
-    date.getDate() === i_Day
+    date.getFullYear() === inputYear &&
+    date.getMonth() === inputMonth &&
+    date.getDate() === inputDay
   );
 };
 
@@ -49,8 +49,8 @@ exports.validateRequest = (req, res, next) => {
     }
   }
 
-  // Validate 'sum' as float or integer based on your requirement
-  const sumErrorMessage = validateFloat(req.body.sum, 'sum'); // Use validateInteger if 'sum' must be an integer
+  // Validate 'sum' as float
+  const sumErrorMessage = validateFloat(req.body.sum, 'sum');
   if (sumErrorMessage) {
     return res.status(400).json({
       message: sumErrorMessage
@@ -58,4 +58,50 @@ exports.validateRequest = (req, res, next) => {
   }
 
   next(); // Proceed if no errors
-};
+}
+
+exports.validateRequestParams = (req, res, next) => {
+  const {
+    user_id,
+    year,
+    month
+  } = req.query;
+
+  // Missing required parameters
+  if (!user_id || !year || !month) {
+    return res.status(400).json({
+      message: "Missing required parameters. Please provide user_id, year, and month.",
+    });
+  }
+
+  // Invalid year format
+  if (!/^\d{4}$/.test(year)) {
+    return res.status(400).json({
+      message: "Invalid year format. Please provide a valid year (YYYY).",
+    });
+  }
+
+  // Invalid month value
+  const monthNum = parseInt(month, 10);
+  if (isNaN(monthNum) || monthNum < 1 || monthNum > 12) {
+    return res.status(400).json({
+      message: "Invalid month. Please provide a valid month.",
+    });
+  }
+
+  // user_id should be a numeric ID
+  if (!/^\d+$/.test(user_id)) {
+    return res.status(400).json({
+      message: "Invalid user_id format. Please provide a numeric user_id.",
+    });
+  }
+
+  next(); // Proceed to the next middleware or request handler
+}
+
+exports.getIntegerValidator = (message) => {
+  return {
+    validator: Number.isInteger,
+    message: message || '{PATH} must be an integer.'
+  };
+}
