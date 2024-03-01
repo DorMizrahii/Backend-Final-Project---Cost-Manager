@@ -25,11 +25,10 @@ exports.addCostItem = async (req, res) => {
     delete newCostItemObject.__v;
 
     // Send a success response with the created cost item
-    res.status(201).send({
-      message: "Cost Item successfully created",
-      data: newCostItemObject, // Assuming you want to return the created item to the client
-    });
-  } catch (error) {
+    res.status(201).send(newCostItemObject);
+
+    //Error Handling
+    } catch (error) {
     // Distinguish between validation errors (400) and other unexpected errors (500)
     if (error.name === 'ValidationError') {
       // This assumes the error is a Mongoose validation error
@@ -103,7 +102,9 @@ exports.getReport = async (req, res) => {
 
     // Send a success response with the report cost item
     res.status(201).send(reports);
-  } catch (error) {
+
+    //Error Handling
+    } catch (error) {
     // Distinguish between validation errors (400) and other unexpected errors (500)
     if (error.name === 'ValidationError') {
       // This assumes the error is a Mongoose validation error
