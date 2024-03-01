@@ -12,18 +12,31 @@ const costItemSchema = new mongoose.Schema({
   year: {
     type: Number,
     required: [true, "Cost item must include a year!"],
+    min: [1900, "Year must be after 1900"],
+    max: [2100, "Year must be before 2100"]
   },
 
+  // month: {
+  //   type: String,
+  //   required: [true, "Cost item must include a month!"],
+  //   validate: {
+  //     //Proper months like January February etc
+  //     validator: function (value) {
+  //       return Months.includes(value);
+  //     },
+  //     message: (props) => `${props.value} is not a valid month!`,
+  //   },
+  // },
+
   month: {
-    type: String,
+    type: Number,
     required: [true, "Cost item must include a month!"],
+    min: [1, "Month must be at least 1 (January)"],
+    max: [12, "Month must be at most 12 (December)"],
     validate: {
-      //Proper months like January February etc
-      validator: function (value) {
-        return Months.includes(value);
-      },
-      message: (props) => `${props.value} is not a valid month!`,
-    },
+      validator: Number.isInteger,
+      message: "Month must be an integer."
+    }
   },
 
   day: {
@@ -34,10 +47,12 @@ const costItemSchema = new mongoose.Schema({
       validator: function (value) {
         // Get the year and month from the document
         const year = this.year;
-        const monthIndex = Months.indexOf(this.month) + 1; // Adjust month value for Date constructor
+        // const monthIndex = Months.indexOf(this.month) + 1; // Adjust month value for Date constructor
+
+        const month = this.month;
 
         // Validate the day for the given month and year
-        return isValidDay(year, monthIndex, value);
+        return isValidDay(year, month, value);
       },
       message: (props) =>
         `${props.value} is not a valid day for the provided month and year!`,
@@ -52,6 +67,7 @@ const costItemSchema = new mongoose.Schema({
   description: {
     type: String,
     required: [true, "Cost item must include a description!"],
+    maxlength: [500, "Description cannot be more than 500 characters"]
   },
 
   category: {

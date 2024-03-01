@@ -5,6 +5,12 @@ const { Categories, Months } = require('../const'); // Adjust the path as necess
 //POST Request
 exports.addCostItem = async (req, res) => {
   try {
+    // Check if the ID is intger
+    if(!Number.isInteger(req.body.user_id))
+    return res.status(400).json({
+      message: "Invalid user ID. It must be an integer."
+    });
+    
     // Find the first user matches the user_id
     const userExist = await User.findOne({ id: req.body.user_id });
 
@@ -54,6 +60,18 @@ exports.getReport = async (req, res) => {
     // Requesting params
     const { user_id, year, month } = req.query;
 
+        // Find the first user matches the user_id
+        const userExist = await User.findOne({
+          id: req.query.user_id
+        });
+
+        // User not exist
+        if (!userExist) {
+          return res.status(404).send({
+            message: "User not found",
+          });
+        }
+
     // Validation checks
     if (!user_id || !year || !month) {
       return res.status(400).send({
@@ -67,9 +85,9 @@ exports.getReport = async (req, res) => {
       });
     }
 
-    if (!Months.includes(month)) {
+    if (month < 1 || month > 12) {
       return res.status(400).send({
-        message: "Invalid month. Please provide a valid month name.",
+        message: "Invalid month. Please provide a valid month.",
       });
     }
 
@@ -83,7 +101,7 @@ exports.getReport = async (req, res) => {
     // Retrieve costs for a specific user, year, and month, then organize them into a report grouped by category.
     const costs = await CostItem.find({ user_id, year, month });
     const reports = Categories.reduce((acc, category) => {
-      acc[category.toLowerCase()] = costs
+      acc[category] = costs
           .filter((cost) => cost.category === category)
           .map(({ day, description, sum }) => ({ day, description, sum }));
       return acc;

@@ -13,7 +13,7 @@ router.get("/report", getReport);
 
 //POST Routes
 router.post("/addcost", addCostItem);
-router.post("/createUser", createUser);
-router.post("/createDeveloper", createDeveloper);
+router.post("/createUser", createUser);//TO REMOVE
+router.post("/createDeveloper", createDeveloper);//TO REMOVE
 
 module.exports = router;
