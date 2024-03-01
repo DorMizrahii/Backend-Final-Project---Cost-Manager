@@ -1,19 +1,21 @@
 const mongoose = require("mongoose");
 const { Categories } = require("../const");
-const { isValidDay} = require("../helper");
+const { isValidDay , getIntegerValidator } = require("../helper");
 
 //Creating a new Schema(collection) of costs
 const costItemSchema = new mongoose.Schema({
   user_id: {
     type: Number,
     required: [true, "Cost item must include a user ID!"],
+    validate: getIntegerValidator
   },
 
   year: {
     type: Number,
     required: [true, "Cost item must include a year!"],
     min: [1900, "Year must be after 1900"],
-    max: [2100, "Year must be before 2100"]
+    max: [2100, "Year must be before 2100"],
+    validate: getIntegerValidator
   },
 
   month: {
@@ -21,22 +23,16 @@ const costItemSchema = new mongoose.Schema({
     required: [true, "Cost item must include a month!"],
     min: [1, "Month must be at least 1 (January)"],
     max: [12, "Month must be at most 12 (December)"],
-    validate: {
-      validator: Number.isInteger,
-      message: "Month must be an integer."
-    }
+    validate: getIntegerValidator
   },
 
   day: {
-    //only days that matches the correspond months
     type: Number,
     required: [true, "Cost item must include a day!"],
     validate: {
       validator: function (value) {
         // Get the year and month from the document
         const year = this.year;
-        // const monthIndex = Months.indexOf(this.month) + 1; // Adjust month value for Date constructor
-
         const month = this.month;
 
         // Validate the day for the given month and year
@@ -62,7 +58,7 @@ const costItemSchema = new mongoose.Schema({
     type: String,
     required: [true, "Cost item must include a category!"],
     validate: {
-      //Only Categories like Food Housing etc....
+      //Only Categories like food housing etc.... ( from the list that was given in the document )
       validator: function (value) {
         return Categories.includes(value);
       },
@@ -74,6 +70,7 @@ const costItemSchema = new mongoose.Schema({
     type: Number,
     required: [true, "Cost item must include a sum!"],
     min: 0,
+    validate: getIntegerValidator
   },
 });
 

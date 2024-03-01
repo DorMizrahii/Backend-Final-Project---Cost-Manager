@@ -46,7 +46,6 @@ exports.addCostItem = async (req, res) => {
   }
 };
 
-
 //GET Request
 exports.getReport = async (req, res) => {
   try {
@@ -64,33 +63,7 @@ exports.getReport = async (req, res) => {
             message: "User not found",
           });
         }
-
-    // Validation checks
-    if (!user_id || !year || !month) {
-      return res.status(400).send({
-        message: "Missing required parameters. Please provide user_id, year, and month.",
-      });
-    }
-
-    if (!/^\d{4}$/.test(year)) {
-      return res.status(400).send({
-        message: "Invalid year format. Please provide a valid year (YYYY).",
-      });
-    }
-
-    if (month < 1 || month > 12) {
-      return res.status(400).send({
-        message: "Invalid month. Please provide a valid month.",
-      });
-    }
-
-    //user_id should be a numeric ID
-    if (!/^\d+$/.test(user_id)) {
-      return res.status(400).send({
-        message: "Invalid user_id format. Please provide a numeric user_id.",
-      });
-    }
-
+        
     // Retrieve costs for a specific user, year, and month, then organize them into a report grouped by category.
     const costs = await CostItem.find({ user_id, year, month });
     const reports = Categories.reduce((acc, category) => {
@@ -101,7 +74,7 @@ exports.getReport = async (req, res) => {
     }, {});
 
     // Send a success response with the report cost item
-    res.status(201).send(reports);
+    res.status(200).send(reports);
 
     //Error Handling
     } catch (error) {
