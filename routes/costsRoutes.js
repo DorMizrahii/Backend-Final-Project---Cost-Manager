@@ -6,13 +6,14 @@ const {
   getAllDevelopers,
   createDeveloper,
 } = require("../controllers/developerController");
+const { validateRequest } = require("../helper");
 
 //GET Routes
 router.get("/about", getAllDevelopers);
 router.get("/report", getReport);
 
 //POST Routes
-router.post("/addcost", addCostItem);
+router.post("/addcost",validateRequest,addCostItem);
 router.post("/createUser", createUser);//TO REMOVE
 router.post("/createDeveloper", createDeveloper);//TO REMOVE
 

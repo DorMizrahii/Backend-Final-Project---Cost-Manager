@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const { Categories, Months } = require("../const");
+const { Categories } = require("../const");
 const { isValidDay} = require("../helper");
 
 //Creating a new Schema(collection) of costs
@@ -15,18 +15,6 @@ const costItemSchema = new mongoose.Schema({
     min: [1900, "Year must be after 1900"],
     max: [2100, "Year must be before 2100"]
   },
-
-  // month: {
-  //   type: String,
-  //   required: [true, "Cost item must include a month!"],
-  //   validate: {
-  //     //Proper months like January February etc
-  //     validator: function (value) {
-  //       return Months.includes(value);
-  //     },
-  //     message: (props) => `${props.value} is not a valid month!`,
-  //   },
-  // },
 
   month: {
     type: Number,

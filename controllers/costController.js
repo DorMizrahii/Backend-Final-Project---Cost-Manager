@@ -1,16 +1,10 @@
 const CostItem = require("../models/costsItemModel");
 const User = require("../models/userModel");
-const { Categories, Months } = require('../const'); // Adjust the path as necessary
+const { Categories } = require('../const'); // Adjust the path as necessary
 
 //POST Request
 exports.addCostItem = async (req, res) => {
   try {
-    // Check if the ID is intger
-    if(!Number.isInteger(req.body.user_id))
-    return res.status(400).json({
-      message: "Invalid user ID. It must be an integer."
-    });
-    
     // Find the first user matches the user_id
     const userExist = await User.findOne({ id: req.body.user_id });
 
