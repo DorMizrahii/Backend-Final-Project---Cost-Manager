@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
-const { getReport, addCostItem } = require("../controllers/costController");
-const { getAllDevelopers } = require("../controllers/developerController");
+const { getReport, addCostItem } = require("../controllers/cost_controller");
+const { getAllDevelopers } = require("../controllers/developer_controller");
 const { validateRequest, validateRequestParams } = require("../helper");
 
 //GET Routes

@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const { Categories } = require("../const");
+const categories = require("../const");
 const { isValidDay , getIntegerValidator } = require("../helper");
 
 //Creating a new Schema(collection) of costs
@@ -60,7 +60,7 @@ const costItemSchema = new mongoose.Schema({
     validate: {
       //Only Categories like food housing etc.... ( from the list that was given in the document )
       validator: function (value) {
-        return Categories.includes(value);
+        return categories.includes(value);
       },
       message: (props) => `${props.value} is not a valid category!`,
     },
