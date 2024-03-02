@@ -1,4 +1,4 @@
-exports.Categories = [
+categories = [
   "food",
   "health",
   "housing",
@@ -7,3 +7,5 @@ exports.Categories = [
   "transportation",
   "other",
 ];
+
+module.exports = categories;

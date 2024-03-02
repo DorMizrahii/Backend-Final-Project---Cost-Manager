@@ -1,4 +1,4 @@
-const Developer = require("../models/developerModel");
+const Developer = require("../models/developer_model");
 
 //GET Request
 exports.getAllDevelopers = async (req, res) => {

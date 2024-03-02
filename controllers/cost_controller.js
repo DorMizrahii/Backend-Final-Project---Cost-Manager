@@ -1,6 +1,6 @@
-const CostItem = require("../models/costsItemModel");
-const User = require("../models/userModel");
-const { Categories } = require('../const'); // Adjust the path as necessary
+const CostItem = require("../models/cost_model");
+const User = require("../models/user_model");
+const categories = require('../const'); // Adjust the path as necessary
 
 //POST Request
 exports.addCostItem = async (req, res) => {
@@ -66,7 +66,7 @@ exports.getReport = async (req, res) => {
         
     // Retrieve costs for a specific user, year, and month, then organize them into a report grouped by category.
     const costs = await CostItem.find({ user_id, year, month });
-    const reports = Categories.reduce((acc, category) => {
+    const reports = categories.reduce((acc, category) => {
       acc[category] = costs
           .filter((cost) => cost.category === category)
           .map(({ day, description, sum }) => ({ day, description, sum }));
