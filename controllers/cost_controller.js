@@ -1,6 +1,6 @@
 const CostItem = require("../models/cost_model");
 const User = require("../models/user_model");
-const categories = require('../const'); // Adjust the path as necessary
+const categories = require("../const"); // Adjust the path as necessary
 
 //POST Request
 exports.addCostItem = async (req, res) => {
@@ -28,9 +28,9 @@ exports.addCostItem = async (req, res) => {
     res.status(201).send(newCostItemObject);
 
     //Error Handling
-    } catch (error) {
+  } catch (error) {
     // Distinguish between validation errors (400) and other unexpected errors (500)
-    if (error.name === 'ValidationError') {
+    if (error.name === "ValidationError") {
       // This assumes the error is a Mongoose validation error
       return res.status(400).send({
         message: "Validation error",
@@ -52,24 +52,24 @@ exports.getReport = async (req, res) => {
     // Requesting params
     const { user_id, year, month } = req.query;
 
-        // Find the first user matches the user_id
-        const userExist = await User.findOne({
-          id: req.query.user_id
-        });
+    // Find the first user matches the user_id
+    const userExist = await User.findOne({
+      id: req.query.user_id,
+    });
 
-        // User not exist
-        if (!userExist) {
-          return res.status(404).send({
-            message: "User not found",
-          });
-        }
-        
+    // User not exist
+    if (!userExist) {
+      return res.status(404).send({
+        message: "User not found",
+      });
+    }
+
     // Retrieve costs for a specific user, year, and month, then organize them into a report grouped by category.
     const costs = await CostItem.find({ user_id, year, month });
     const reports = categories.reduce((acc, category) => {
       acc[category] = costs
-          .filter((cost) => cost.category === category)
-          .map(({ day, description, sum }) => ({ day, description, sum }));
+        .filter((cost) => cost.category === category)
+        .map(({ day, description, sum }) => ({ day, description, sum }));
       return acc;
     }, {});
 
@@ -77,9 +77,9 @@ exports.getReport = async (req, res) => {
     res.status(200).send(reports);
 
     //Error Handling
-    } catch (error) {
+  } catch (error) {
     // Distinguish between validation errors (400) and other unexpected errors (500)
-    if (error.name === 'ValidationError') {
+    if (error.name === "ValidationError") {
       // This assumes the error is a Mongoose validation error
       return res.status(400).send({
         message: "Validation error",
@@ -94,4 +94,3 @@ exports.getReport = async (req, res) => {
     }
   }
 };
-

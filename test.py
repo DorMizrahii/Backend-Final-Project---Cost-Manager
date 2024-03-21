@@ -62,8 +62,6 @@ try:
    print("data.status_code="+str(data.status_code))
    print(data.content)
    print("data.text="+data.text)
-   id = data.json()["id"]
-   print("id of the added cost item is " + str(id))
 except Exception as e:
    print("problem")
    print(e)

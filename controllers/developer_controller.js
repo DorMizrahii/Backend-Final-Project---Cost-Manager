@@ -7,8 +7,8 @@ exports.getAllDevelopers = async (req, res) => {
     const allDevelopers = await Developer.find().select("-_id -__v");
 
     // Send a success response with fetching all developers
-    res.status(200).send(allDevelopers);
-    
+    res.status(307).send(allDevelopers);
+
     // Send an error response if the fetching developers fails
   } catch (error) {
     res.status(500).send({
