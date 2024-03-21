@@ -1,3 +1,8 @@
+// Developers:
+// First name: Nir, Dor, Yamit
+// Last name: Katz, Mizarhi, Segev
+// ID:   206361883 , 315429175 , 206776486
+
 exports.isValidDay = (inputYear, inputMonth, inputDay) => {
   // Adjust month value since JavaScript months are zero-based (0 for January, 11 for December)
   inputMonth--;

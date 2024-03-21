@@ -1,3 +1,8 @@
+// Developers:
+// First name: Nir, Dor, Yamit
+// Last name: Katz, Mizarhi, Segev
+// ID:   206361883 , 315429175 , 206776486
+
 const mongoose = require("mongoose");
 const { isValidEnglishName } = require("../helper");
 const { getIntegerValidator } = require("../helper");

@@ -1,3 +1,8 @@
+// Developers:
+// First name: Nir, Dor, Yamit
+// Last name: Katz, Mizarhi, Segev
+// ID:   206361883 , 315429175 , 206776486
+
 const CostItem = require("../models/cost_model");
 const User = require("../models/user_model");
 const categories = require("../const"); // Adjust the path as necessary
