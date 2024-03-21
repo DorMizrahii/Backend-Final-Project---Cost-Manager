@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const { isValidEnglishName } = require("../helper");
 
-//Creating a new Schema(collection) of developers
+// Creating a new Schema(collection) of developers
 const developerSchema = new mongoose.Schema({
   firstname: {
     type: String,
@@ -11,7 +11,7 @@ const developerSchema = new mongoose.Schema({
       message: (props) => `${props.value} is not a valid first name!`,
     },
   },
-  
+
   lastname: {
     type: String,
     required: [true, "Developer property must include last name!"],

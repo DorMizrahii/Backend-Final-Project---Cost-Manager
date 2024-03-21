@@ -1,6 +1,6 @@
 const User = require("../models/user_model");
 
-//POST Request
+// POST Request
 exports.createUser = async (req, res) => {
   try {
     // Create a new user item using the request body
@@ -19,14 +19,13 @@ exports.createUser = async (req, res) => {
     });
   } catch (error) {
     // Distinguish between validation errors (400) and other unexpected errors (500)
-    if (error.name === 'ValidationError') {
-      // This assumes the error is a Mongoose validation error
+    if (error.name === "ValidationError") {
       return res.status(400).send({
         message: "Validation error",
         error: error.message,
       });
     } else {
-      // For other kinds of errors, send a 500 Internal Server Error response
+      // Internal Server Error response
       return res.status(500).send({
         message: "Internal server error",
         error: "An unexpected error occurred",

@@ -2,11 +2,9 @@ exports.isValidDay = (inputYear, inputMonth, inputDay) => {
   // Adjust month value since JavaScript months are zero-based (0 for January, 11 for December)
   inputMonth--;
 
-  // Create a Date object with the provided year, month, and day
   const date = new Date(inputYear, inputMonth, inputDay);
 
   // Check if the year, month, and day match the provided values
-  // (JavaScript will automatically adjust the day if it's out of range for the given month)
   return (
     date.getFullYear() === inputYear &&
     date.getMonth() === inputMonth &&
@@ -25,52 +23,48 @@ const validateInteger = (value, fieldName) => {
     return `Invalid ${fieldName}. It must be an integer.`;
   }
   return null; // No error
-}
+};
 
 // Utility function to check if a value is a float
 const validateFloat = (value, fieldName) => {
-  if (isNaN(value)) { // Checking if it's not a number at all
+  if (isNaN(value)) {
+    // Checking if it's not a number at all
     return `Invalid ${fieldName}. It must be a number.`;
   }
   return null; // No error
-}
+};
 
 exports.validateRequest = (req, res, next) => {
   // Fields to validate as integers
-  const integerFields = ['user_id', 'year', 'month', 'day'];
+  const integerFields = ["user_id", "year", "month", "day"];
 
-  // Validate integer fields
   for (const field of integerFields) {
     const errorMessage = validateInteger(req.body[field], field);
     if (errorMessage) {
       return res.status(400).json({
-        message: errorMessage
+        message: errorMessage,
       });
     }
   }
 
-  // Validate 'sum' as float
-  const sumErrorMessage = validateFloat(req.body.sum, 'sum');
+  const sumErrorMessage = validateFloat(req.body.sum, "sum");
   if (sumErrorMessage) {
     return res.status(400).json({
-      message: sumErrorMessage
+      message: sumErrorMessage,
     });
   }
 
   next(); // Proceed if no errors
-}
+};
 
 exports.validateRequestParams = (req, res, next) => {
-  const {
-    user_id,
-    year,
-    month
-  } = req.query;
+  const { user_id, year, month } = req.query;
 
   // Missing required parameters
   if (!user_id || !year || !month) {
     return res.status(400).json({
-      message: "Missing required parameters. Please provide user_id, year, and month.",
+      message:
+        "Missing required parameters. Please provide user_id, year, and month.",
     });
   }
 
@@ -96,12 +90,12 @@ exports.validateRequestParams = (req, res, next) => {
     });
   }
 
-  next(); // Proceed to the next middleware or request handler
-}
+  next(); // Proceed if no errors
+};
 
 exports.getIntegerValidator = (message) => {
   return {
     validator: Number.isInteger,
-    message: message || '{PATH} must be an integer.'
+    message: message || "{PATH} must be an integer.",
   };
-}
+};

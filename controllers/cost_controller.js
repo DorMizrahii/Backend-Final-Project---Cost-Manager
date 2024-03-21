@@ -2,10 +2,9 @@ const CostItem = require("../models/cost_model");
 const User = require("../models/user_model");
 const categories = require("../const"); // Adjust the path as necessary
 
-//POST Request
+// POST Request
 exports.addCostItem = async (req, res) => {
   try {
-    // Find the first user matches the user_id
     const userExist = await User.findOne({ id: req.body.user_id });
 
     // User not exist
@@ -27,17 +26,16 @@ exports.addCostItem = async (req, res) => {
     // Send a success response with the created cost item
     res.status(201).send(newCostItemObject);
 
-    //Error Handling
+    // Error Handling
   } catch (error) {
     // Distinguish between validation errors (400) and other unexpected errors (500)
     if (error.name === "ValidationError") {
-      // This assumes the error is a Mongoose validation error
       return res.status(400).send({
         message: "Validation error",
         error: error.message,
       });
     } else {
-      // For other kinds of errors, send a 500 Internal Server Error response
+      // Internal Server Error response
       return res.status(500).send({
         message: "Internal server error",
         error: "An unexpected error occurred",
@@ -46,7 +44,7 @@ exports.addCostItem = async (req, res) => {
   }
 };
 
-//GET Request
+// GET Request
 exports.getReport = async (req, res) => {
   try {
     // Requesting params
@@ -76,17 +74,16 @@ exports.getReport = async (req, res) => {
     // Send a success response with the report cost item
     res.status(200).send(reports);
 
-    //Error Handling
+    // Error Handling
   } catch (error) {
     // Distinguish between validation errors (400) and other unexpected errors (500)
     if (error.name === "ValidationError") {
-      // This assumes the error is a Mongoose validation error
       return res.status(400).send({
         message: "Validation error",
         error: error.message,
       });
     } else {
-      // For other kinds of errors, send a 500 Internal Server Error response
+      // Internal Server Error response
       return res.status(500).send({
         message: "Internal server error",
         error: "An unexpected error occurred",

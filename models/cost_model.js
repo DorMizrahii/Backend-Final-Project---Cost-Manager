@@ -1,13 +1,13 @@
 const mongoose = require("mongoose");
 const categories = require("../const");
-const { isValidDay , getIntegerValidator } = require("../helper");
+const { isValidDay, getIntegerValidator } = require("../helper");
 
-//Creating a new Schema(collection) of costs
+// Creating a new Schema(collection) of costs
 const costItemSchema = new mongoose.Schema({
   user_id: {
     type: Number,
     required: [true, "Cost item must include a user ID!"],
-    validate: getIntegerValidator
+    validate: getIntegerValidator,
   },
 
   year: {
@@ -15,7 +15,7 @@ const costItemSchema = new mongoose.Schema({
     required: [true, "Cost item must include a year!"],
     min: [1900, "Year must be after 1900"],
     max: [2100, "Year must be before 2100"],
-    validate: getIntegerValidator
+    validate: getIntegerValidator,
   },
 
   month: {
@@ -23,7 +23,7 @@ const costItemSchema = new mongoose.Schema({
     required: [true, "Cost item must include a month!"],
     min: [1, "Month must be at least 1 (January)"],
     max: [12, "Month must be at most 12 (December)"],
-    validate: getIntegerValidator
+    validate: getIntegerValidator,
   },
 
   day: {
@@ -51,7 +51,7 @@ const costItemSchema = new mongoose.Schema({
   description: {
     type: String,
     required: [true, "Cost item must include a description!"],
-    maxlength: [500, "Description cannot be more than 500 characters"]
+    maxlength: [500, "Description cannot be more than 500 characters"],
   },
 
   category: {
@@ -70,7 +70,7 @@ const costItemSchema = new mongoose.Schema({
     type: Number,
     required: [true, "Cost item must include a sum!"],
     min: 0,
-    validate: getIntegerValidator
+    validate: getIntegerValidator,
   },
 });
 
