@@ -58,7 +58,7 @@ const costItemSchema = new mongoose.Schema({
     type: String,
     required: [true, "Cost item must include a category!"],
     validate: {
-      //Only Categories like food housing etc.... ( from the list that was given in the document )
+      // Only Categories like food housing etc.... ( from the list that was given in the document )
       validator: function (value) {
         return categories.includes(value);
       },
