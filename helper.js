@@ -47,7 +47,8 @@ exports.validateRequest = (req, res, next) => {
   if (!req.body.year && !req.body.month && !req.body.day) {
     const now = new Date();
     req.body.year = now.getFullYear();
-    req.body.month = now.getMonth() + 1; // getMonth() is 0-indexed, add 1 to make it 1-indexed
+    // getMonth() is 0-indexed, add 1 to make it 1-indexed
+    req.body.month = now.getMonth() + 1;
     req.body.day = now.getDate();
   }
 
