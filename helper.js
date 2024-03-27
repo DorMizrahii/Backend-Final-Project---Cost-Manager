@@ -43,6 +43,14 @@ exports.validateRequest = (req, res, next) => {
   // Fields to validate as integers
   const integerFields = ["user_id", "year", "month", "day"];
 
+  // Check if year, month, and day fields are all missing
+  if (!req.body.year && !req.body.month && !req.body.day) {
+    const now = new Date();
+    req.body.year = now.getFullYear();
+    req.body.month = now.getMonth() + 1; // getMonth() is 0-indexed, add 1 to make it 1-indexed
+    req.body.day = now.getDate();
+  }
+
   for (const field of integerFields) {
     const errorMessage = validateInteger(req.body[field], field);
     if (errorMessage) {
